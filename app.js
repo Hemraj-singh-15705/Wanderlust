@@ -21,6 +21,7 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
+console.log(process.env.ATLASDB_URL);
 main()
   .then(() => {
     console.log("Connected to DB");
@@ -86,14 +87,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/demouser", async (req,res)=>{
-//     let fakeUser = new User({
-//         email:"student@gmail.com",
-//         username:"delta-student"
-//     });
-//     let registerUser = await User.register(fakeUser,"helloworld");
-//     res.send(registerUser);
-// });
+
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
