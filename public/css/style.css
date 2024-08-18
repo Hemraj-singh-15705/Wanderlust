@@ -128,3 +128,9 @@ body {
   height: 400px;
   width: 80vh;
 }
+
+
+.creater i{
+  color: #c95c13;
+  font-size: 1.5rem;
+}
