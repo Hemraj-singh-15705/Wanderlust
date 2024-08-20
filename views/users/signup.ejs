@@ -13,11 +13,14 @@
             <div class="mb-3">
                 <label for="email" class="form-label">email</label>
                 <input name="email" id="email" type="email" pattern="[^@\s]+@gmail+\.com+" class="form-control" required>
+                <div class="invalid-feedback">Please Enter right e mail</div>
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">password</label>
-                <input name="password" id="password" type="password" class="form-control" required>
+                <input name="password" id="password" type="password" class="form-control" minlength=6 maxLength = 12 required>
+                <div class="valid-feedback">correct </div>
+                <div class="invalid-feedback">Password must be between 6 and 12 characters.</div>
             </div>
             <button class="btn btn-success">Signup</button>
         </form>
