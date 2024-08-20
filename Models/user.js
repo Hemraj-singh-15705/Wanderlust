@@ -7,7 +7,8 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const userSchema = new Schema({
     email:{
         type:String,
-        required:true
+        required:true,
+        match: /^[a-zA-Z0-9._%+-]+@gmail+\.com+/
     }
 });
 
