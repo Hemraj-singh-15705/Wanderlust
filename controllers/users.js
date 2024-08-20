@@ -8,10 +8,15 @@ module.exports.renderSignupForm = (req,res)=>{
 module.exports.signup = async (req,res)=>{
     try{
         let {username,email,password} =req.body;
-    const newUser = new User({email ,username});
-    const registerUser = await User.register(newUser,password);
-    console.log(registerUser);
-    req.login(registerUser,(err)=>{
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          return res.status(400).send("Invalid email address");
+        }
+        const newUser = new User({email ,username});
+        const registerUser = await User.register(newUser,password);
+        console.log(registerUser);
+        req.login(registerUser,(err)=>{
         if(err){
             return next(err);
         }
