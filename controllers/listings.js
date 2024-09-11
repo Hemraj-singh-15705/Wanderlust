@@ -3,6 +3,18 @@ const mbxGeocoding  = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
+var NodeGeocoder = require('node-geocoder');
+var options = {
+    provider: 'tomtom',
+  
+    // Optionnal depending of the providers
+    httpAdapter: 'https', // Default
+    apiKey: mapToken, // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+  };
+
+  const geocoder = NodeGeocoder(options);
+
 module.exports.index = async (req, res) => {
   const allListings = await listing.find({});
   res.render("listings/index.ejs", { allListings });
@@ -80,4 +92,23 @@ module.exports.destroyListing = async (req, res) => {
   console.log(deletedListing);
   req.flash("success", "Listing Deleted !");
   res.redirect("/listings");
+};
+
+
+module.exports.filter = async(req,res,next)=>{
+  let {id} = req.params;
+  let allListings = await listing.find({category: id});
+  if(allListings.length != 0){
+      res.render("listings/index.ejs", { allListings });
+  }else{
+      req.flash("error",`No listing with ${id}`);
+      res.redirect("/listings")
+  }
+}
+
+module.exports.search = async (req, res) => {
+  let { location } = req.query;
+
+  const allListings = await listing.find({ location });
+  res.render("./listings/index.ejs", { allListings });
 };
